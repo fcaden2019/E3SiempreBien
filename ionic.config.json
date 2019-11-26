@@ -1,0 +1,7 @@
+{
+  "name": "E3Browser",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

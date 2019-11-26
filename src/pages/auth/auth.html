@@ -1,0 +1,133 @@
+<!-- -->
+<ion-content padding class="profiles-bg">
+	<div class="auth-content">
+
+		<!-- Logo -->
+		<div padding-horizontal text-center>
+			<div class="logo">
+				<img src="assets/img/logoGoparty-ico.png">
+			</div>
+			<h2 ion-text class="text-secondary" no-margin>
+				<strong>Siempre </strong>Bien
+			</h2>
+		</div>
+
+		<div padding-vertical>
+		  <ion-segment [(ngModel)]="auth" color="light">
+		    <ion-segment-button value="login">
+		      Ingresar
+		    </ion-segment-button>
+		    <ion-segment-button value="register">
+		      Registrarse
+		    </ion-segment-button>
+		  </ion-segment>
+		</div>
+
+		<div [ngSwitch]="auth">
+			<!-- Login form -->
+			<div id="loginForm" *ngSwitchCase="'login'">
+				<form [formGroup]="onLoginForm" class="list-form">
+					<ion-item>
+						<ion-label floating>
+							<ion-icon name="mail" item-start class=""></ion-icon>
+							Email
+						</ion-label>
+						<ion-input type="email" formControlName="email"></ion-input>
+					</ion-item>
+					<p ion-text color="danger" class="text-12x has-error" *ngIf="onLoginForm.get('email').touched && onLoginForm.get('email').hasError('required')">Campo Obligatorio</p>
+
+					<ion-item>
+						<ion-label floating>
+							<ion-icon name="lock" item-start class=""></ion-icon>
+							Contraseña
+						</ion-label>
+						<ion-input type="password" formControlName="password"></ion-input>
+					</ion-item>
+					<p ion-text color="danger" class="text-12x has-error" *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">Campo Obligatorio</p>
+				</form>
+
+				<p text-right ion-text color="light" tappable (click)="forgotPass()"><strong>¿Olvidaste la contraseña?</strong></p>
+
+				<div>
+					<button ion-button icon-start block color="secondary" (click)="login()" [disabled]="!onLoginForm.valid">
+						<ion-icon name="log-in"></ion-icon>
+						INICIAR SESIÓN
+					</button>
+<!--
+					<p text-center ion-text color="light">O ingresar con:</p>
+-->
+<br>
+					<ion-grid class="btn-group" fixed>
+						<ion-row>
+							<button ion-button icon-only block class="btn-facebook col col-12">
+								<ion-icon name="logo-facebook"></ion-icon>
+								INICIAR CON FACEBOOK
+							</button>							
+						</ion-row>
+					</ion-grid>
+
+				</div>
+			</div>
+
+			<div id="registerForm" *ngSwitchCase="'register'">
+		    <!-- Register form -->
+		    <form [formGroup]="onRegisterForm" class="list-form">
+		      <ion-item>
+		        <ion-label floating>
+		          <ion-icon name="person" item-start class="text-white"></ion-icon>
+		          Nombre
+		        </ion-label>
+		        <ion-input type="text" formControlName="fullName"></ion-input>
+		      </ion-item>
+		      <p ion-text color="danger" class="text-12x has-error" *ngIf="onRegisterForm.get('fullName').touched && onRegisterForm.get('fullName').hasError('required')">Campo Obligatorio</p>
+
+					<ion-item>
+							<ion-label floating>
+								<ion-icon name="people" item-start class="text-white"></ion-icon>
+								Usuario
+							</ion-label>
+							<ion-input type="text" formControlName="userReg"></ion-input>
+						</ion-item>
+						<p ion-text color="danger" class="text-12x has-error" *ngIf="onRegisterForm.get('userReg').touched && onRegisterForm.get('userReg').hasError('required')">Campo Obligatorio</p>
+						
+		      <ion-item>
+		        <ion-label floating>
+		          <ion-icon name="mail" item-start class="text-white"></ion-icon>
+		          Email
+		        </ion-label>
+		        <ion-input type="email" name="correo" formControlName="email" ngModel></ion-input>
+		      </ion-item>
+		      <p ion-text color="danger" class="text-12x has-error" *ngIf="onRegisterForm.get('email').touched && onRegisterForm.get('email').hasError('required')">Campo Obligatorio</p>
+
+		      <ion-item>
+		        <ion-label floating>
+		          <ion-icon name="lock" item-start class="text-white"></ion-icon>
+		          Contraseña
+		        </ion-label>
+		        <ion-input type="password" name="clave" formControlName="password" ngModel></ion-input>
+		      </ion-item>
+		      <p ion-text color="danger" class="text-12x has-error" *ngIf="onRegisterForm.get('password').touched && onRegisterForm.get('password').hasError('required')">Campo Obligatorio</p>
+		    </form>
+
+		    <div margin-top>
+		      <button ion-button block color="secondary" (click)="registrarUsuario()" [disabled]="!onRegisterForm.valid">
+		        REGISTRARSE
+		      </button>
+
+		      <p text-center ion-text color="light">O Ingresar con:</p>
+
+		      <ion-grid class="btn-group" fixed>
+		        <ion-row>
+		          <button ion-button icon-only block class="btn-facebook col col-12">
+		            <ion-icon name="logo-facebook"></ion-icon>
+		          </button>		          
+		        </ion-row>
+		      </ion-grid>
+		    </div>
+		  </div>
+
+		</div>
+
+
+	</div>
+</ion-content>
