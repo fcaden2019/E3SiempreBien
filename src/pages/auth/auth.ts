@@ -56,10 +56,13 @@ export class AuthPage {
       //this.nav.push(HomePage,{tokenU:token});
       this.user.username = correo;
       this.user.password = clave;
-      this.authService.login(this.user)
+     // this.user.grant_type = "siemprebien";
+
+      this.authService.login2(this.user)
       .subscribe(
         (data)=> {
           console.log('Respuesta ' + data);
+          this.nav.push(HomePage,{tokenU:token});
         },
         (error)=>{
           let toast = this.toastCtrl.create({
@@ -71,7 +74,7 @@ export class AuthPage {
             showCloseButton: true
           });
           toast.present();
-          this.nav.push(HomePage,{tokenU:token});
+          
           console.log(error);
         }    
       )

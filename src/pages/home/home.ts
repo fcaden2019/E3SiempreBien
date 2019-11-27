@@ -10,8 +10,11 @@ import { Firebase } from '@ionic-native/firebase/ngx';
 export class HomePage {
 
   constructor(public navCtrl: NavController, private browser:InAppBrowser, private fcm: Firebase) {
-    this.openURL();
-    this.getToken();
+    //this.getToken();
+    //this.openURL();
+
+    //this.getToken2();
+    
   }
   openURL(){
     const opt: InAppBrowserOptions={
@@ -21,12 +24,30 @@ export class HomePage {
     };
       this.browser.create('https://www.e3ecommerce.com.ar/es/','_self',opt);
   }
-
+/*
   async getToken() {
-    this.fcm.onTokenRefresh().subscribe(token => {
+    this.fcm.onTokenRefresh()
+    .subscribe(token => {
       console.log("FB Token " + token);
       });  
+      
   }
+  getToken2(){
+    this.fcm.getToken()
+    .then(token => console.log("The token is: "+token)) // save the token server-side and use it to push notifications to this device
+    .catch(error => console.error("Error getting token", error));
+  }
+  onNotificationOpen(){
+    this.fcm.onNotificationOpen()
+    .subscribe(data => console.log("User opened a notification: "+ data));
+  }
+  onTokenRefresh(){
+    this.fcm.onTokenRefresh()
+    .subscribe((token: string) => console.log("Got a new token "+token));
+  }
+
+
+*/
 
 
 }
