@@ -4,6 +4,9 @@ import { FormGroup, Validators, FormBuilder, NgForm } from '@angular/forms';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserGlobalProvider } from "../../providers/user-global/user-global";
 import { HomePage } from '../../pages/home/home';
+//import { FCM } from '@ionic-native/fcm';
+//import { Firebase } from '@ionic-native/firebase';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 @IonicPage()
 @Component({
@@ -11,16 +14,49 @@ import { HomePage } from '../../pages/home/home';
   templateUrl: 'auth.html',
 })
 export class AuthPage {
+  
   public onLoginForm: FormGroup;
   public onRegisterForm: FormGroup;
   auth: string = "login";
+  dataApi:any;
 
   constructor(private _fb: FormBuilder, public nav: NavController, public forgotCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController, 
     public authService:AuthServiceProvider, private user:UserGlobalProvider,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,private uniqueDeviceID: UniqueDeviceID) 
+  {
 		this.menu.swipeEnable(false);
     this.menu.enable(false);
     this.terminarsesion();
+    //this.fcm.subscribeToTopic('marketing');
+//this.getToken2();
+//this.getTokenFCM();
+    this.getToken3();
+
+
+  }
+  
+  getTokenFCM(){
+    /*
+    this.fcm.getToken()
+    .then(token => {
+      this.presentAlert("OK2", "el token es: "+token)
+    })
+    .catch(error => {
+      this.presentAlert("Error2", "No se pudo obtener el token: "+error)
+    });
+    */
+  }
+  
+  getToken3(){
+    this.uniqueDeviceID.get()  
+    .then((uuid: any)  => {
+      this.presentAlert("OK3", "el token es: "+uuid)
+    })
+    .catch(error => {
+      this.presentAlert("Error3", "No se pudo obtener el token: "+error)
+    });
+
+
   }
 
   ngOnInit() {
@@ -58,26 +94,59 @@ export class AuthPage {
       this.user.password = clave;
      // this.user.grant_type = "siemprebien";
 
-      this.authService.login2(this.user)
-      .subscribe(
-        (data)=> {
-          console.log('Respuesta ' + data);
-          this.nav.push(HomePage,{tokenU:token});
-        },
-        (error)=>{
-          let toast = this.toastCtrl.create({
-            message: error.error,
-            duration: 3000,
-            position: 'top',
-            cssClass: 'dark-trans',
-            closeButtonText: 'OK',
-            showCloseButton: true
-          });
-          toast.present();
-          
-          console.log(error);
-        }    
-      )
+     
+     
+     this.authService.PostLogin(this.user)        
+     .subscribe(
+         (data)=> {
+          let data2 = JSON.stringify(data);
+          this.dataApi = JSON.parse(data2);
+          this.user.access_token = this.dataApi.access_token;
+           console.log("El token es:"+this.dataApi.access_token);
+
+           this.authService.PostDevice(this.user.access_token, "ANDROID","LGM1231213")        
+           .subscribe(
+               (data)=> {
+                this.presentAlert("Bienvenido", "Se pudo ingresar correctamente");
+                this.nav.push(HomePage);
+               },
+               (error)=>{
+                this.presentAlert("Error", "No se pudo registrar el dispositivo");
+                 console.log(error);
+                 this.nav.push(HomePage);
+                }
+           );  
+
+
+
+           //this.presentAlert("Correcto", "Se recibio el token perfectamente");
+         },
+         (error)=>{
+          this.presentAlert("Error", "No se pudo obtener el token");
+           console.log(error);
+          }
+     )   
+     
+    
+     
+     /*
+     this.authService.login3()
+     .then(data => console.log("The data is: "+data)) // save the token server-side and use it to push notifications to this device
+     .catch(error => console.error("Error getting token", error));
+*/
+
+
+      
+    }
+
+    async presentAlert(Titulo, Mensaje) {
+      const alert = await this.alertCtrl.create({
+        title: Titulo,
+        message: Mensaje,
+        buttons: ['OK']
+      });
+  
+      await alert.present();
     }
 
     registrarUsuario(){   

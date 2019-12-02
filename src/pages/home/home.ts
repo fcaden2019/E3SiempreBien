@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { Firebase } from '@ionic-native/firebase/ngx';
+import { UserGlobalProvider } from "../../providers/user-global/user-global";
 
 @Component({
   selector: 'page-home',

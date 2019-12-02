@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders,HttpClientModule } from '@angular/common/http';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule  } from 'ionic-angular';
@@ -14,7 +14,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { UserGlobalProvider } from '../providers/user-global/user-global';
 import * as firebase from 'firebase';
 import { Firebase } from '@ionic-native/firebase/ngx';
-
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 firebase.initializeApp({
   apiKey: "AIzaSyBX6cn6iMju8zq81j4Ijap6JHrv1J0bPNY",
@@ -54,7 +55,10 @@ firebase.initializeApp({
     InAppBrowser,
     AuthServiceProvider,
     UserGlobalProvider,
-    Firebase
+    Firebase,
+    HttpClient,
+    Push,
+    UniqueDeviceID
   ]
 })
 export class AppModule {}

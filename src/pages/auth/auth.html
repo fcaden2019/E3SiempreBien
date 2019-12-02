@@ -1,3 +1,4 @@
+
 <!-- -->
 <ion-content padding class="profiles-bg">
 	<div class="auth-content">
@@ -5,13 +6,12 @@
 		<!-- Logo -->
 		<div padding-horizontal text-center>
 			<div class="logo">
-				<img src="assets/img/logoGoparty-ico.png">
+				<img style="width: 80%;" src="assets/imgs/logoSiempreBien.png">
 			</div>
-			<h2 ion-text class="text-secondary" no-margin>
-				<strong>Siempre </strong>Bien
-			</h2>
+			
 		</div>
 
+<!--
 		<div padding-vertical>
 		  <ion-segment [(ngModel)]="auth" color="light">
 		    <ion-segment-button value="login">
@@ -24,7 +24,7 @@
 		</div>
 
 		<div [ngSwitch]="auth">
-			<!-- Login form -->
+
 			<div id="loginForm" *ngSwitchCase="'login'">
 				<form [formGroup]="onLoginForm" class="list-form">
 					<ion-item>
@@ -53,9 +53,7 @@
 						<ion-icon name="log-in"></ion-icon>
 						INICIAR SESIÓN
 					</button>
-<!--
-					<p text-center ion-text color="light">O ingresar con:</p>
--->
+
 <br>
 					<ion-grid class="btn-group" fixed>
 						<ion-row>
@@ -69,8 +67,7 @@
 				</div>
 			</div>
 
-			<div id="registerForm" *ngSwitchCase="'register'">
-		    <!-- Register form -->
+			<div id="registerForm" *ngSwitchCase="'register'">		    
 		    <form [formGroup]="onRegisterForm" class="list-form">
 		      <ion-item>
 		        <ion-label floating>
@@ -107,7 +104,8 @@
 		        <ion-input type="password" name="clave" formControlName="password" ngModel></ion-input>
 		      </ion-item>
 		      <p ion-text color="danger" class="text-12x has-error" *ngIf="onRegisterForm.get('password').touched && onRegisterForm.get('password').hasError('required')">Campo Obligatorio</p>
-		    </form>
+			</form>
+
 
 		    <div margin-top>
 		      <button ion-button block color="secondary" (click)="registrarUsuario()" [disabled]="!onRegisterForm.valid">
@@ -127,7 +125,73 @@
 		  </div>
 
 		</div>
+	-->
+<br><br>
+	<div id="loginForm" >	
+			<br>
+		<form [formGroup]="onLoginForm" class="list-form login_wrapper">
+			<div>
+				<img style="width: 40px;margin-top: -50px; padding-bottom: 8px;" src="assets/imgs/lock2.png">
+			</div>
+				<h2>INGRESAR</h2>
+				<h6 class="loginSubtitle">Por favor ingresá con tus datos:</h6>
+			<ion-item>
+				<ion-label class="loginLabel" floating>
+					<ion-icon name="mail" item-start class=""></ion-icon>
+					Usuario (email)
+				</ion-label>
+				<ion-input type="email" formControlName="email"></ion-input>
+			</ion-item>
+			<p ion-text color="danger" class="text-12x has-error" *ngIf="onLoginForm.get('email').touched && onLoginForm.get('email').hasError('required')">El Usuario es obligatorio</p>
 
+			<ion-item>
+				<ion-label class="loginLabel" floating>
+					<ion-icon name="lock" item-start class=""></ion-icon>
+					Contraseña
+				</ion-label>
+				<ion-input type="password" formControlName="password"></ion-input>
+			</ion-item>
+			<p ion-text color="danger" class="text-12x has-error" *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">La Contraseña es obligatoria</p>
+
+
+			<ion-row style="margin-top: 10px;">
+				<ion-col style="padding: 0px !important" size="4">
+						<p text-left ion-text color="primary" tappable (click)="forgotPass()">Olvidé mi clave</p>
+				</ion-col>
+				<ion-col style="padding: 0px !important" size="8">
+					<button style="border-radius: 20px;margin-top: 10px;" ion-button block color="primary" (click)="login()" [disabled]="!onLoginForm.valid">
+						Ingresar
+					</button>
+				</ion-col>
+				
+			</ion-row>
+	
+			
+		</form>
+
+		
+		
+		<div>
+			
+
+<br>
+			<ion-grid class="btn-group" fixed>
+				<ion-row>
+					<!--
+					<button ion-button icon-only block class="btn-facebook col col-12">
+						<ion-icon name="logo-facebook"></ion-icon>
+						INICIAR CON FACEBOOK
+					</button>							
+					-->
+					<button style="border-radius: 20px;" ion-button icon-start block color="green" (click)="register()" >
+							<ion-icon name="log-in"></ion-icon>
+							Crear Cuenta
+						</button>
+				</ion-row>
+			</ion-grid>
+
+		</div>
+	</div>
 
 	</div>
 </ion-content>
