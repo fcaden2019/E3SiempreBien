@@ -38,11 +38,27 @@ export class MyApp {
         pushServiceURL: 'http://push.api.phonegap.com/v1/push'
       }
     };
+
+    
  
     const pushObject: PushObject = this.push.init(options);
+
+    let topic = "siemprebien"; //this way ,topics are working in android but not in ios
+    pushObject.subscribe(topic);
  
     pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
     pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+    
+/*
+    pushObject.on('registration').subscribe((data:any) => {             
+        let topic = "topics/siemprebien";
+        pushObject.subscribe(topic).then((res:any) => {
+            //console.log("subscribed to topic: ", res);
+        });        
+    });
+    */
+
+
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 }

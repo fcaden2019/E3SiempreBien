@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, AlertController, ToastController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, ToastController, MenuController,Platform } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder, NgForm } from '@angular/forms';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserGlobalProvider } from "../../providers/user-global/user-global";
@@ -19,10 +19,12 @@ export class AuthPage {
   public onRegisterForm: FormGroup;
   auth: string = "login";
   dataApi:any;
+  deviceID;
+  platformOS;
 
   constructor(private _fb: FormBuilder, public nav: NavController, public forgotCtrl: AlertController, public menu: MenuController, public toastCtrl: ToastController, 
     public authService:AuthServiceProvider, private user:UserGlobalProvider,
-    public alertCtrl: AlertController,private uniqueDeviceID: UniqueDeviceID) 
+    public alertCtrl: AlertController,private uniqueDeviceID: UniqueDeviceID,public platform: Platform) 
   {
 		this.menu.swipeEnable(false);
     this.menu.enable(false);
@@ -50,7 +52,15 @@ export class AuthPage {
   getToken3(){
     this.uniqueDeviceID.get()  
     .then((uuid: any)  => {
-      this.presentAlert("OK3", "el token es: "+uuid)
+      if (this.platform.is('ios')) {
+        this.platformOS = "IOS";
+       }
+       if (this.platform.is('android')) {
+        this.platformOS = "ANDROID";
+       }
+      
+      //this.presentAlert("OK3", "La plataforma es: "+this.platformOS+" el token es: "+uuid)
+      this.deviceID=uuid
     })
     .catch(error => {
       this.presentAlert("Error3", "No se pudo obtener el token: "+error)
@@ -104,7 +114,7 @@ export class AuthPage {
           this.user.access_token = this.dataApi.access_token;
            console.log("El token es:"+this.dataApi.access_token);
 
-           this.authService.PostDevice(this.user.access_token, "ANDROID","LGM1231213")        
+           this.authService.PostDevice(this.user.access_token, this.platformOS,this.deviceID)        
            .subscribe(
                (data)=> {
                 this.presentAlert("Bienvenido", "Se pudo ingresar correctamente");
