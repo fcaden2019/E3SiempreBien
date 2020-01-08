@@ -12,7 +12,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private browser:InAppBrowser, private fcm: Firebase) {
     //this.getToken();
-    //this.openURL();
+    this.openURL();
 
     //this.getToken2();
     
@@ -23,7 +23,7 @@ export class HomePage {
       location: "no",
       hidenavigationbuttons:"yes"      
     };
-      this.browser.create('https://www.e3ecommerce.com.ar/es/','_self',opt);
+      this.browser.create('http://devsiempre.e3ecommerce.com/','_self',opt);
   }
 /*
   async getToken() {

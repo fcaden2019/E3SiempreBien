@@ -8,6 +8,7 @@ import { HomePage } from '../../pages/home/home';
 //import { Firebase } from '@ionic-native/firebase';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
+
 @IonicPage()
 @Component({
   selector: 'page-auth',
@@ -60,6 +61,7 @@ export class AuthPage {
        }
       
       //this.presentAlert("OK3", "La plataforma es: "+this.platformOS+" el token es: "+uuid)
+      console.log("La plataforma es: "+this.platformOS+" el token es: "+uuid);
       this.deviceID=uuid
     })
     .catch(error => {
